@@ -75,7 +75,6 @@ The [Releases](https://github.com/unpins/mksh/releases) page has standalone bina
   environment and read nothing from `/nix/store`.
 
 - **Windows via Cosmopolitan.** mingw can't host a Korn shell (no `fork`, job
-  control, or POSIX signals), so the Windows binary is built with `cosmocc` and
-  apelinked to a PE32+ `.exe`. mksh's own `Build.sh` feature-detection works
-  unchanged because
-  a cosmocc-built probe runs natively on the build host. See `cosmo.nix`.
+  control, or POSIX signals), so the Windows binary goes through cosmo. mksh's
+  own `Build.sh` feature-detection works unchanged because a cosmocc-built probe
+  runs natively on the build host. See `cosmo.nix`.
