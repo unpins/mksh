@@ -1,0 +1,33 @@
+--- a/exec.c
++++ b/exec.c
+@@ -1362,6 +1362,30 @@
+ 			name = Xclose(xs, xp + namelen);
+ 			goto search_path_ok;
+ 		}
++#ifdef __COSMOCC__
++		/*
++		 * On Windows/Cosmopolitan, if the bare candidate does not
++		 * exist, retry once with ".exe" appended (mirroring PATHEXT)
++		 * so that typing "ls" finds "ls.exe". Keep the ".exe" variant
++		 * as the resolved path so the later execve uses it.
++		 */
++		if (ev == ENOENT) {
++			size_t nl = namelen - 1;
++
++			/* avoid a double ".exe" suffix */
++			if (nl < 4 || strcmp(name + nl - 4, ".exe") != 0) {
++				/* room for ".exe" plus terminating NUL */
++				XcheckN(xs, xp, namelen + 4);
++				/* overwrite the existing NUL, re-terminate */
++				memcpy(xp + nl, ".exe", 5);
++				if ((ev = search_access(Xstring(xs, xp),
++				    mode)) == 0) {
++					name = Xclose(xs, xp + nl + 5);
++					goto search_path_ok;
++				}
++			}
++		}
++#endif
+ 		/* accumulate non-ENOENT errors only */
+ 		if (ev != ENOENT && ec == 0)
+ 			ec = ev;
