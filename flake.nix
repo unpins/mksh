@@ -29,6 +29,12 @@
     unpins-lib.lib.mkStandaloneFlake {
       inherit self;
       name = "mksh";
+
+      # Build via the unpin-llvm engine + emit a bitcode multicall module.
+      engine = "unpin-llvm";
+      multicall = {
+        programs = [{ name = "mksh"; }];
+      };
       license = "MirOS";
 
       # mksh has -c; exercise the interpreter and a builtin to confirm argv
