@@ -77,4 +77,10 @@ The [Releases](https://github.com/unpins/mksh/releases) page has standalone bina
 - **Windows via Cosmopolitan.** mingw can't host a Korn shell (no `fork`, job
   control, or POSIX signals), so the Windows binary goes through cosmo. mksh's
   own `Build.sh` feature-detection works unchanged because a cosmocc-built probe
-  runs natively on the build host. See `cosmo.nix`.
+  runs natively on the build host. The shipped artifact is a single Windows PE
+  `.exe` (apelinked from the cosmo ELF), never an APE. See `cosmo.nix`.
+
+- **Tests.** mksh's `check.pl` harness isn't wired into the build: it needs
+  category flags plus a writable scratch area and hits `Permission denied`
+  unlinking temp/history files in the Nix build sandbox. The release smoke test
+  exercises the interpreter and a builtin instead.

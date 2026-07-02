@@ -24,7 +24,7 @@
   # Targets:
   #   - Linux (static-musl, every arch).
   #   - macOS (Mach-O, libSystem-only).
-  #   - Windows (Cosmopolitan APE): see cosmo.nix.
+  #   - Windows (single PE .exe, built via Cosmopolitan): see cosmo.nix.
   outputs = { self, unpins-lib }:
     unpins-lib.lib.mkStandaloneFlake {
       inherit self;
