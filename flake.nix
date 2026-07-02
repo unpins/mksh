@@ -38,7 +38,7 @@
       license = "MirOS";
 
       # mksh has -c; exercise the interpreter and a builtin to confirm argv
-      # parsing on every ABI (incl. the cosmo APE).
+      # parsing on every ABI (incl. the cosmo PE).
       smoke = [ "-c" "echo unpins-smoke-ok" ];
       smokePattern = "unpins-smoke-ok";
 
